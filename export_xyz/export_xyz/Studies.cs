@@ -22,6 +22,7 @@ namespace export_xyz
         {
             Nazwa = name;
             Tryb = SetMode(mode);
+            ActiveStudies.AddStudiesOrIncrementStudents(name); 
         }
 
         private StudiesMode SetMode(string mode)

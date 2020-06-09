@@ -6,6 +6,6 @@ namespace export_xyz
 {
     public interface IOutputFileCreator
     {
-        public void CreateOutputFile(ICollection<Student> students);
+        public void CreateOutputFile(College college);
     }
 }

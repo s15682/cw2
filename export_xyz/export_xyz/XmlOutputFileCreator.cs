@@ -15,12 +15,15 @@ namespace export_xyz
             this.outputFilePath=outputFilePath;
         }
 
-        public void CreateOutputFile(ICollection<Student> students)
+        public void CreateOutputFile(College college)
         {
             FileStream writer = new FileStream(outputFilePath, FileMode.Create);
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Student>), new XmlRootAttribute("uczelnia"));
-            serializer.Serialize(writer, students);
+            XmlSerializer serializer = new XmlSerializer( typeof(College));
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "");
+            serializer.Serialize(writer, college, ns);
         }
 
+  
     }
 }

@@ -6,7 +6,8 @@ using System.Xml.Serialization;
 
 namespace export_xyz
 {
-    [Serializable]
+    
+    [XmlType(TypeName ="student")]
     public class Student
     {
         [XmlAttribute(AttributeName = "indexNumber")] public string IndexNumber { get; set; }

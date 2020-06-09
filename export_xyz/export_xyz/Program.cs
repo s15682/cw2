@@ -22,9 +22,12 @@ namespace export_xyz
             FileStream inputFile = SetInputFile(inputFilePath);
             StudentsCreator creator = new StudentsCreator();
             List<Student> studentList = creator.CreateStudentsList(inputFile);
-            CreateAndFillOutputFile(studentList, returnType);  
+            College college = CreateCollege(studentList); 
+            CreateAndFillOutputFile(college, returnType);  
             inputFile.Close(); 
         }
+
+
 
         private static void SetParameters(string[] args)
         {
@@ -70,7 +73,12 @@ namespace export_xyz
             return inputFile;
         }
 
-        private static void CreateAndFillOutputFile(List<Student> studentList, ReturnTypes returnType)
+        private static College CreateCollege(List<Student> studentList)
+        {
+            return new College(studentList, ActiveStudies.GetActiveStudies()); 
+        }
+
+        private static void CreateAndFillOutputFile(College college, ReturnTypes returnType)
         {
             IOutputFileCreator fileCreator = null;   
             switch (returnType)
@@ -82,7 +90,7 @@ namespace export_xyz
                     Logger.CreateLogEntry("Brak implementacji dla typu " + returnType);
                     break;
             }
-            if( fileCreator!=null) fileCreator.CreateOutputFile(studentList);
+            if( fileCreator!=null) fileCreator.CreateOutputFile(college);
 
         }
 
