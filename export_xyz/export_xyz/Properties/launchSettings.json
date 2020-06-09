@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "export_xyz": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\Studia\\APBD\\cw2\\InputFile\\dane.csv\" \"D:\\Studia\\APBD\\cw2\\OutputFile\\wynik.xml\" xml"
+    }
+  }
+}
