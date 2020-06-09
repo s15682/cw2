@@ -16,6 +16,8 @@ namespace export_xyz
         [XmlElement(ElementName = "name")] public string Nazwa { get; set; }
         [XmlElement(ElementName = "mode")] public StudiesMode Tryb { get; set; }
 
+        public Studies() { }
+
         public Studies(string name, string mode)
         {
             Nazwa = name;

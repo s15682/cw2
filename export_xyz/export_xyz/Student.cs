@@ -18,6 +18,8 @@ namespace export_xyz
         [XmlElement(ElementName = "fathersName")] public string ImieOjca { get; set; }
         [XmlElement(ElementName = "studies")] public Studies Studia { get; set; }
 
+        public Student() { }
+
         public Student(string studentData)
         {
             string[] studentDataArray = studentData.Split(',');

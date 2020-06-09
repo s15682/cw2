@@ -6,23 +6,48 @@ namespace export_xyz
 {
     class Program
     {
-        
+        enum ReturnTypes { XML }
+
         const string DEF_IN_FILE_PATH = "dane.csv";
         const string DEF_OUT_FILE_PATH = "result.xml";
 
+        static string outputFilePath;
+        static string inputFilePath;
+        static ReturnTypes returnType; 
+
+
         static void Main(string[] args)
         {
-            FileStream inputFile = SetInputFile(args[0]);
+            SetParameters(args); 
+            FileStream inputFile = SetInputFile(inputFilePath);
             StudentsCreator creator = new StudentsCreator();
-            List<Student> studentList = creator.CreateStudentsList(inputFile); 
-            foreach( Student st in studentList)
-            {
-                Console.WriteLine(st); 
-            }
-
-            // FileStream outpuFile = SetOutputFile(args[1]); 
+            List<Student> studentList = creator.CreateStudentsList(inputFile);
+            CreateAndFillOutputFile(studentList, returnType);  
+            inputFile.Close(); 
         }
 
+        private static void SetParameters(string[] args)
+        {
+            if (args.Length < 3)
+            {
+                outputFilePath = DEF_OUT_FILE_PATH;
+                inputFilePath = DEF_IN_FILE_PATH;
+                returnType = ReturnTypes.XML;
+            }
+            else
+            {
+                outputFilePath = args[1];
+                inputFilePath = args[0];
+                returnType = SetReturnType(args[2]);
+            }
+        }
+
+        private static ReturnTypes SetReturnType(string typeName)
+        {
+            if (typeName.ToLower() == "xml") { return ReturnTypes.XML; }
+            Logger.CreateLogEntry("podano nieprawidłowy typ lub podany typ nie jest obsługiwany"); 
+            return ReturnTypes.XML;
+        }
 
         private static FileStream SetInputFile(string inputFileAddress)
         {
@@ -42,16 +67,26 @@ namespace export_xyz
                 Logger.CreateLogEntry(msg);
                 inputFile = new FileStream(DEF_IN_FILE_PATH, FileMode.Open);
             }
-            return inputFile;     
+            return inputFile;
         }
 
-        private static FileStream SetOutputFile(string outputFileAddress)
+        private static void CreateAndFillOutputFile(List<Student> studentList, ReturnTypes returnType)
         {
-            throw new NotImplementedException();
+            IOutputFileCreator fileCreator = null;   
+            switch (returnType)
+            {
+                case ReturnTypes.XML:
+                    fileCreator = new XmlOutputFileCreator(outputFilePath);
+                    break;
+                default:
+                    Logger.CreateLogEntry("Brak implementacji dla typu " + returnType);
+                    break;
+            }
+            if( fileCreator!=null) fileCreator.CreateOutputFile(studentList);
+
         }
 
-        
-    }
 
+    }
         
 }
