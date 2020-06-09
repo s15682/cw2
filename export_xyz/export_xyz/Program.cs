@@ -11,10 +11,9 @@ namespace export_xyz
 
         static void Main(string[] args)
         {
-            //FileStream inputFile = SetInputFile(args[0]);
-            // FileStream inputFile = SetOutputFile(args[1]); 
-            CreateLogEntry("log test");
-            CreateLogEntry("log test 2");
+            FileStream inputFile = SetInputFile(args[0]);
+
+            // FileStream outpuFile = SetOutputFile(args[1]); 
         }
 
 
